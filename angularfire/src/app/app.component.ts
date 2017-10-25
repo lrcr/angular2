@@ -6,10 +6,9 @@ import { Router } from "@angular/router";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  public isLoggedIn: boolean;
 
-  test = 'test입니다'
-
-    // this.router.navigate(['login']);
+  logo_name = 'test입니다'
+  // this.router.navigate(['login']);
 }

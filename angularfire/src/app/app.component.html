@@ -1,4 +1,30 @@
-<nav class="navbar navbar-default">
+<div class="navbar-fixed">
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">{{logo_name}}</a>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent tabs-fixed-width ttabs">
+                <li class="tab col s3"><a [routerLink] = "['/main']" class="ttabs-1">main</a></li>
+                <li class="tab col s3"><a [routerLink] = "['/share']" class="ttabs-2">share</a></li>
+                <li class="tab col s3"><a [routerLink] = "['/talk']" class="ttabs-3">talk</a></li>
+            </ul></div>
+
+    </nav>
+</div>
+<!-- //nav -->
+<ul class="tabs tabs-transparent tabs-fixed-width red lighten-2 ttabs-hide">
+    <li class="tab col s3"><a href="#ttabs-1" class="ttabs-1-hide">main</a></li>
+    <li class="tab col s3"><a href="#ttabs-2" class="ttabs-2-hide">share</a></li>
+    <li class="tab col s3"><a href="#ttabs-3" class="ttabs-3-hide">talk</a></li>
+</ul>
+<div id="ttabs-1-hide" style="display:none"></div>
+<div id="ttabs-2-hide" style="display:none"></div>
+<div id="ttabs-3-hide" style="display:none"></div>
+
+<!-- <input id="authKey" value=${authKey} readonly style="display:none;">       -->
+
+<!-- <nav class="navbar navbar-default">
   <div class="container-fluid">
 
     <div class="navbar-header">
@@ -14,8 +40,5 @@
       </ul>
     </div>
   </div>
-</nav>
-
-<div class="app-content">
-  <router-outlet></router-outlet>
-</div>
+</nav> -->
+<router-outlet></router-outlet>
