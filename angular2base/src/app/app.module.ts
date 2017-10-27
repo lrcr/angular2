@@ -41,7 +41,7 @@ const router = [
     ChildRouteModule,
     RouterModule.forRoot(router)
   ],
-  providers: [TestGuardService, Http],
+  providers: [TestGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
