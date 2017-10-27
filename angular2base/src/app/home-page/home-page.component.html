@@ -1,0 +1,33 @@
+<p>
+  home-page works!
+  {{title}}
+  {{inputFile}}
+</p>
+<img src={{img?.src}} [style.width.px]='img?.size' (click)="goToWeb(imgSrc)" >
+
+<select #listSelect
+  (change)="selection(listSelect.value)">
+  <option>Red</option>
+  <option>Blue</option>
+  <option>Yellow</option>
+  <option>Green</option>
+  <option>Gold</option>  
+</select>
+
+<select
+  (change)="selection($event.target.value)">
+  <option>Red</option>
+  <option>Blue</option>
+  <option>Yellow</option>
+  <option>Green</option>
+  <option>Gold</option>  
+</select>
+
+<div class="">
+  <!-- FormsMoudule필요 -->
+  <input type="file" (change)="readFile($event);">
+</div>
+
+<div class="">
+  <input type="text" [(ngModel)]="title">
+</div>

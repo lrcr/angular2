@@ -1,0 +1,10 @@
+
+<h1>템플릿 기반 폼</h1>
+
+<form #frmDemo="ngForm" >
+  <input type="text" name="note" [(ngModel)]="vm.note" #txtNote ="ngModel">
+  <input type="text" name="id" [(ngModel)]="vm.id">
+  <input type="button" name="btnSave" value="저장" (click)="btnSave_Click(txtNote.value)" />
+</form>
+
+{{ frmDemo.value | json }}

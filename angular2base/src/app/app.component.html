@@ -1,0 +1,9 @@
+<h1>라우팅</h1>
+
+<li><a [routerLink] = "['/home']">Home</a></li>
+<li><a [routerLink] = "['/view', 1]" routerLinkActiveOptions='{exact:true}'>View:1</a></li>
+<!-- routerLinkActiveOptions='{exact:true}' 정확히 매치되는 라우터 경로만 스타일 주기 -->
+<li><a [routerLink] = "['/view', 2]" routerLinkActive="active" >View:2</a></li>
+<li><a [routerLink] = "['/form-demo']" routerLinkActive="active" >form-demo</a></li>
+<li><a [routerLink] = "['/http-demo']" routerLinkActive="active" >http-demo</a></li>
+<router-outlet></router-outlet>
