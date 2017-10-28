@@ -1,3 +1,11 @@
+<h1>{{title}}</h1>
+<ul>
+	<li *ngFor="let c of courses">
+		{{c.id}} - {{c.title}}
+	</li>
+</ul>
+
+
 <h1>라우팅</h1>
 
 <li><a [routerLink] = "['/home']">Home</a></li>

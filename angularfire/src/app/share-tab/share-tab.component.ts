@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'shareTab',
+  selector: 'tab2',
   templateUrl: './share-tab.component.html',
   styleUrls: ['./share-tab.component.css']
 })

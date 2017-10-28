@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'; 
 import { ChildRouteModule } from './child-route/child-route.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http } from '@angular/http';
 
 /* view components*/
 import { AppComponent } from './app.component';
@@ -14,7 +14,8 @@ import { HttpDemoComponent } from './http-demo/http-demo.component';
 
 /*service*/
 import { TestGuardService} from './test-guard.service';
-
+import { AppService } from './app.service';
+import { OutputComponentComponent } from './output-component/output-component.component';
 
 const router = [
   // {path : '', redirectTo : 'home', pathMatch : 'full'},
@@ -32,16 +33,18 @@ const router = [
     ViewOneComponent,
     ViewTwoComponent,
     FormExpComponent,
-    HttpDemoComponent
+    HttpDemoComponent,
+    OutputComponentComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     ChildRouteModule,
+    HttpModule,
     RouterModule.forRoot(router)
   ],
-  providers: [TestGuardService],
+  providers: [TestGuardService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

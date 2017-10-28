@@ -1,6 +1,23 @@
-<h2>idea manager</h2>
-<ul>
-  <li *ngFor="let idea of ideas">
-    {{idea.id}} - {{idea.note}}
-  </li>
-</ul>
+<h1>http 테스트</h1>
+
+ <p *ngIf="!speakers"><em>Loading...</em></p>
+ <div *ngIf="speakers">
+ 	<div *ngFor="let speaker of speakers">
+ 		<a><img src="http://placeimg.com/100/100/any"></a>
+ 		{{speaker.id}} - {{speaker.name}}
+ 	</div>
+ </div>
+
+<form #form="ngForm">
+	<div>
+		<label>아이디어</label>
+		<div><input type="text" id="note" name="note" placeholder="아이디어" [(ngModel)]="note"></div>
+	</div>
+	<div>
+		<div>
+			<input type="button" (click)="btnSave(form.val)" name="" value="전송">
+		</div>
+	</div>
+</form>
+
+{{form.value | json}}

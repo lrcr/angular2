@@ -1,7 +1,7 @@
 <div class="navbar-fixed">
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo center">{{logo_name}}</a>
+            <a [routerLink]="['/']" class="brand-logo center">{{logo_name}}</a>
         </div>
         <div class="nav-content">
             <ul class="tabs tabs-transparent tabs-fixed-width ttabs">
@@ -9,7 +9,6 @@
                 <li class="tab col s3"><a [routerLink] = "['/share']" class="ttabs-2">share</a></li>
                 <li class="tab col s3"><a [routerLink] = "['/talk']" class="ttabs-3">talk</a></li>
             </ul></div>
-
     </nav>
 </div>
 <!-- //nav -->
@@ -21,24 +20,9 @@
 <div id="ttabs-1-hide" style="display:none"></div>
 <div id="ttabs-2-hide" style="display:none"></div>
 <div id="ttabs-3-hide" style="display:none"></div>
+<tab1></tab1>
+<tab2></tab2>
+<tab3></tab3>
 
 <!-- <input id="authKey" value=${authKey} readonly style="display:none;">       -->
-
-<!-- <nav class="navbar navbar-default">
-  <div class="container-fluid">
-
-    <div class="navbar-header">
-      <a class="navbar-brand" [routerLink] = "['/login']">Go login</a>
-    </div>
-
-    <div *ngIf="isLoggedIn">
-      <ul class="nav navbar-nav navbar-right border-left">
-        <li><a (click)="logout()">Logout</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a>{{test }}</a></li>
-      </ul>
-    </div>
-  </div>
-</nav> -->
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
