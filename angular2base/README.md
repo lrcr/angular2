@@ -32,7 +32,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## 라우팅
-- 메인 뷰 페이지에 
+- 메인 뷰 페이지에
 <base href="/"> 적용 - index.html 페이지가 루트 페이지임을 확인
 
 - app.module.ts 에 RouterModule, (Routes) 포함 from @angular/router
@@ -41,10 +41,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - 모듈에 Router import(ActivatedRoute, Router)
 접근 ex
 export class exComponent implements OnInit{
-  
+
   constructor(private route : ActivatedRoute, private router : Router){}
     id : number;
-    
+
     ngOnInit(){
         this.id = +this.route.snapshot.params["id"];
     }
@@ -65,7 +65,7 @@ export class exComponent implements OnInit{
   - 라우트에 resolve: {} 섹션 구현
 -url
   - let id = +router.url[1].path ;
-    
+
 라우팅 가드(Guard) => service
 -Resolvers
 -CanActivate = > 라우팅 param을 원하는 format으로 받고 싶을때...
@@ -84,10 +84,10 @@ exprots class RoutingViewGuard implements CanActivate{
       }
       return true;
     }
-    
+
 }
 
--html에 속성으로 
+-html에 속성으로
 [routerLink] = "['/home']"
 [routerLink] = "['/home', 1]"  디렉티브로 링크 지정
 -[routerLinkActive] 디렉티브로 CSS 하이라이트 줄 수 있음
@@ -99,7 +99,7 @@ exprots class RoutingViewGuard implements CanActivate{
 child Router 만들어서 추가도 가능
 
 ## 데이터 바인딩
-- 기본 바인딩 {{}} 
+- 기본 바인딩 {{}}
 - property 바인딩 : One way 바인딩
   -[속성] = '구문'
   -<img [src]='path/to/src'/>
@@ -116,8 +116,8 @@ child Router 만들어서 추가도 가능
 - #이름지정
   - 특정 폼 컨트롤에 #별칭 형태로 ID속성을 지정 가능
   - <input #txtName/> = > txtName.value로 값 접근가능
-  
-  
+
+
 ## 폼 관련 지시자
   - FormsModule
     - ngForm
@@ -126,13 +126,29 @@ child Router 만들어서 추가도 가능
   #기호를 사용하여 템플릿에서 폼의 구성요소 참조 가능
     - #frmRegister
     - #txtName, #txtEmail
-    
+
 
 ## 서비스
 - 특정 비지니스 로직을 다른 파일에서 관리
 - 여러 서비스를 만들어 놓고 필요할 때 마다 가져다(inject) 사용
     - 생성자에 매개변수 수입 방식의 DI
 - Shared 폴더
-
-
-
+- 서비스 클래스
+    - 주로 HTTP 데이터 서비스용 클래스
+    - 앵귤러 모듈에 등록 필요
+      - 컴포넌트와 달리 providers 섹션에 등록
+- 컴포넌트 클래스
+  - 서비스를 사용하는 클래스
+  - 직접 데이터 서비스 코드를 구현해도 무관
+- 의존성 주입 (Dependency Injection)
+  - @Injectable() 데코레이터
+    - Injectable  모듈 인클루드
+      - import {Injectable} from '@angular/core';
+    - 서비스 클래스 만들 때 사용
+  - 컴포넌트 클래스의 생성자에 private로 주입
+- {provide : 클래스, useClass : 클래스}
+  - services.AddTransient<클래스, 클래스)(); 와 동일
+  - useClass
+  - useValue
+  - useExsting
+  - useFactory:fac()

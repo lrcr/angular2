@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-output-component',
-  templateUrl: './output-component.component.html',
-  styleUrls: ['./output-component.component.css']
+  templateUrl: './output-component.component.html'
 })
-export class OutputComponentComponent implements OnInit {
-
+export class OutputComponent implements OnInit {
+	page : number;
   constructor() { }
 
   ngOnInit() {
+  }
+  showPage(pageNum){
+  	this.page = pageNum;
   }
 
 }

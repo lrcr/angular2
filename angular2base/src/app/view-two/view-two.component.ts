@@ -9,10 +9,11 @@ export class ViewTwoComponent implements OnInit {
   _score:number = 0;
   @Input()
   get score(): number{
+    
     return this._score;
   }
   set score(v : number){
-    
+  
     this._score = v;
     this.printGrade();
   }
