@@ -6,12 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  title = "this is title";
+  title = 'this is title';
 
   img = {
     src: 'https://angular.io/assets/images/logos/angular/angular.svg',
     size: 100
-  }
+  };
 
   constructor() { }
 
@@ -26,6 +26,6 @@ export class HomePageComponent implements OnInit {
 
   }
   readFile(file) {
-    console.log("file", file);
+    console.log('file', file);
   }
 }

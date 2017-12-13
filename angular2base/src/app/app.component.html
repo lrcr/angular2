@@ -5,14 +5,25 @@
 	</li>
 </ul>
 
-
 <h1>라우팅</h1>
 
 <li><a [routerLink] = "['/home']">Home</a></li>
+<li><a [routerLink] = "['/added-module-compo']">added-module-compo</a></li>
+<li><a [routerLink] = "['/lazy-loading']">lazy-loading</a></li>
+<li><a [routerLink] = "['/child']">Child-router => home</a></li>
 <li><a [routerLink] = "['/view', 1]" routerLinkActiveOptions='{exact:true}'>View:1</a></li>
 <!-- routerLinkActiveOptions='{exact:true}' 정확히 매치되는 라우터 경로만 스타일 주기 -->
 <li><a [routerLink] = "['/view', 2]" routerLinkActive="active" >View:2</a></li>
 <li><a [routerLink] = "['/form-demo']" routerLinkActive="active" >form-demo</a></li>
 <li><a [routerLink] = "['/output-demo']" routerLinkActive="active" >output-demo</a></li>
 <li><a [routerLink] = "['/http-demo']" routerLinkActive="active" >http-demo</a></li>
+<li><a href="#atag">a tag link</a></li>
+<li><a [routerLink] = "[{ outlets : { primary : 'home2', added_router : 'chat' }}]">Open Chat</a></li>
+<li><a [routerLink] = "[{ outlets : { added_router : null }}]">Close Chat</a></li>
+<Button (click)="openAddedRouter()">코드로 added_route open</Button>
 <router-outlet></router-outlet>
+<router-outlet name="added_router"></router-outlet>
+
+<hr>
+<div style="height : 1000px; background-color: gold">공백</div>
+<div id='atag'>a tag link</div>

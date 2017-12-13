@@ -3,7 +3,7 @@
   {{title}}
   {{inputFile}}
 </p>
-<img src={{img?.src}} [style.width.px]='img?.size' (click)="goToWeb(imgSrc)" >
+<img src={{img?.src}} [style.width.px]='img?.size' (click)="goToWeb(img?.src)" >
 
 <select #listSelect
   (change)="selection(listSelect.value)">

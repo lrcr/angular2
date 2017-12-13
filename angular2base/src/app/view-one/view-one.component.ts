@@ -19,8 +19,7 @@ export class ViewOneComponent implements OnInit {
     console.log("route.params['value'] : ");
     console.log(this.route.params['value']);
     console.log("router.url : ");
-    console.log(this.router.url[1]);
-    
+    console.log(this.router.url[1]);    
   }
 
   goBack(): void {
@@ -28,7 +27,7 @@ export class ViewOneComponent implements OnInit {
   }
   
   btnSubmit_Click() : void{
-      this.message = `입력하신 점수는 ${this.score}입니다`;
+    this.message = `입력하신 점수는 ${this.score}입니다`;
   }
 
 
