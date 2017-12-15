@@ -5,6 +5,11 @@
   <input type="text" name="note" [(ngModel)]="vm.note" #txtNote ="ngModel">
   <input type="text" name="id" [(ngModel)]="vm.id">
   <input type="button" name="btnSave" value="저장" (click)="btnSave_Click(txtNote.value)" />
+  <input type="text" placeholder="observable test" [formControl]="searchInput">
 </form>
 
-{{ frmDemo.value | json }}
+<hr>
+<h1>파이프</h1>
+{{ frmDemo.value | json }} <br>
+{{ birthday | date }} <br>
+{{ birthday | date | uppercase }} <br>
