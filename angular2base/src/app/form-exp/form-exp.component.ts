@@ -57,11 +57,9 @@ export class FormExpComponent implements OnInit {
         }
       });
   }
-
 }
 
 export class DemoModel {
-
   id: number;
   note: string;
 }
