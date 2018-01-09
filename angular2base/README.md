@@ -528,7 +528,7 @@ ex)
     }
 
   #### formGroupName
-  - formGroupName은 폼 안에서 그룹을 묶을 때 사용한다. formGroupName 디렉티브는 FormGroup클래스를 사용하며, 그룹 안에서 또 다른 그룹을 만들 때는 FormGroup안에 또 다른 FromGroup을 선언할 수도 있다. 
+  - formGroupName은 폼 안에서 그룹을 묶을 때 사용한다. formGroupName 디렉티브는 FormGroup클래스를 사용하며, 그룹 안에서 또 다른 그룹을 만들 때는 FormGroup안에 또 다른 FormGroup을 선언할 수도 있다. 
   ex)
   @Component({
     template : <form [formGroup]="formModel"><div formGroupName="dataRange">...</div></form>
@@ -556,7 +556,32 @@ ex)
  #### formControl
  - 템플릿에서 폼에 있는 필드를 가리키기 위해 formControl 디렉티브를 사용하기도 하지만, FormGroup으로 폼 모델을 정의하지 않은 상황에서 필드 하나의 유효성 검증과 같은 폼 API를 사용할 때도 FormControl 클래스를 사용할 수 있다. 또 5장에서 다뤘던 옵저버블을 폼 컨트롤에서 사용하려면 new FormControl().valueChanges 프로퍼티를 참조한다.
   ex) <input [formControl]="weatherControl">
- - 이 예제에서는 FormGroup을 만들지 않고 독립적인 FormControl을 사용하기 때문에, formControlName 디렉티브는 사용할 수 없다. 따라서 
+ - 이 예제에서는 FormGroup을 만들지 않고 독립적인 FormControl을 사용하기 때문에, formControlName 디렉티브는 사용할 수 없다. 따라서 프로퍼티 바인딩 문법과 함께 formControl을 사용했다.
+
+ #### formArrayName
+- formArrayName 디렉디브는 FormGroup 객체의 자신인 FormArray 인스턴스를 DOM 엘리먼트에 연결하며, 따라서 formGroup디렉티브 범위 안에서 사용해야 한다. 그리고 FormArray에 있는 폼 컨트롤은 이름을 지정할 수 없기 때문에 DOM 엘리먼트에 연결할 때는 인덱스를 사용한다. 보통 이 디렉티브는 ngFor 디렉티브와 함께 사용하기 때문에 큰 어려움은 없을 것이다.
+  ex) @Component({
+    template : `
+      <ul formArrayName = "emails">
+        <li *ngFor="let e of formModel.get('emails').controls; let i=index">
+          <input [formControlName]="i">
+        </li>
+        <button type="button" (click)="addEmail()">Add Email</button>
+      </ul>
+    `
+  })
+  class AppComponent {
+    formModel : FormGroup : new FormGroup({
+      emails : new FormArray([
+        new FormControl()
+      ])
+    });
+  }
+ 루프에서 사용하는 인덱스는 자동으로 변수i에 바인딩되도록 *ngFor 구문에 let i=index를 사용했다. 이전에 살펴봤던 formControlName 디렉티브는 컴포넌트의 FormControl을 DOM 엘리먼트에 연결할 때 미리 지정했던 프로퍼티 이름으로 접근하지만, 이 코드에서는 인덱스를 이름으로 사용한다. 사용자가 이메일 추가 버튼을 클릭하면 addEmail() 함수 안에서는 this.formModel.get('emails').push(new FormControl()); 코드를 실행해서 FormArray에 새로운 FormControl 인스턴스를 추가할 것이다. 
+ 
+ ###FormBuilder 사용하기
+ - FormBuilder를 사용하면 반응형 폼을 간편하게 만들 수 있으며, 폼을 구성할 때 컴포넌트 코드에 자주 사용하는 FormControl, FormGroup, FormArray와 같은 클래스 이름을 반복할 필요가 없다. FormBuilder는 ReactiveFormsModule을 로드하면 생성자에 의존성으로 주입할 수 있다. FormBuilder.group() 함수는 객체를 인자로 받아 FormGroup을 생성하며, 폼 그룹을 정의하기 위해 인자로 전달하는 객체는 FormGroup 클래스를 직접 사용할 때와 동일한 구조다. FormBuilder를 사용할 때 FormGroup과 같은 방식으로 초기값을 지정하는 문자열을 바로 사용할 수 도 있지만, 배열을 사용해서 FormControl을 초기화할 수도 있다. 이때 배열의 첫 번쨰 항목은 FormControl의 초기값이며, 두 번째 항목은 유효성 검사 함수를 지정한다. 세 번째 항목도 지정할 수 있는데, 여기에는 비동기 유효성 검사 함수를 지정할 수 있다.
+
  
 ## 서비스
 - 특정 비지니스 로직을 다른 파일에서 관리
