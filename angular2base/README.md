@@ -579,8 +579,55 @@ ex)
   }
  루프에서 사용하는 인덱스는 자동으로 변수i에 바인딩되도록 *ngFor 구문에 let i=index를 사용했다. 이전에 살펴봤던 formControlName 디렉티브는 컴포넌트의 FormControl을 DOM 엘리먼트에 연결할 때 미리 지정했던 프로퍼티 이름으로 접근하지만, 이 코드에서는 인덱스를 이름으로 사용한다. 사용자가 이메일 추가 버튼을 클릭하면 addEmail() 함수 안에서는 this.formModel.get('emails').push(new FormControl()); 코드를 실행해서 FormArray에 새로운 FormControl 인스턴스를 추가할 것이다. 
  
- ###FormBuilder 사용하기
+ ###FormBuilder 사용하기(p370)
  - FormBuilder를 사용하면 반응형 폼을 간편하게 만들 수 있으며, 폼을 구성할 때 컴포넌트 코드에 자주 사용하는 FormControl, FormGroup, FormArray와 같은 클래스 이름을 반복할 필요가 없다. FormBuilder는 ReactiveFormsModule을 로드하면 생성자에 의존성으로 주입할 수 있다. FormBuilder.group() 함수는 객체를 인자로 받아 FormGroup을 생성하며, 폼 그룹을 정의하기 위해 인자로 전달하는 객체는 FormGroup 클래스를 직접 사용할 때와 동일한 구조다. FormBuilder를 사용할 때 FormGroup과 같은 방식으로 초기값을 지정하는 문자열을 바로 사용할 수 도 있지만, 배열을 사용해서 FormControl을 초기화할 수도 있다. 이때 배열의 첫 번쨰 항목은 FormControl의 초기값이며, 두 번째 항목은 유효성 검사 함수를 지정한다. 세 번째 항목도 지정할 수 있는데, 여기에는 비동기 유효성 검사 함수를 지정할 수 있다.
+
+ ### 폼 유효성 검사(p371)
+ - 일반적인 데이터 바인딩과 비교해볼 때 폼 API를 사용하면 폼의 유효성을 검사하는 로직을 구현할 때 좀 더 편하다. 폼 유효성 검사는 템플릿 기반의 폼과 반응형 폼 모두 사용할 수 있으며, TypeScript로 만든 유효성 검사기(validator)를 사용한다. 다만, 반응형 폼에서는 유효성 검사기를 직접 사용하고, 템플릿 기반의 폼에서는 유효성 검사기를 커스텀 디렉티브로 변환해서 사용한다. 
+ #### 반응형 폼 유효성 검사
+ ex) interface ValidatorFn{
+   (c : AbstractControl) : { [key : string] : any};
+ }
+ - 이제 유효성 검사기는 AbstractControl 타입의 객체를 인자로 받고 객체 리터럴을 반환해야 하는데, 모든 유효성 검사기가 반드시 이런 모양이어야 하는 것은 아니며, 개발자의 필요에 맞게 변혈할 수도 있다. 그리고 AbstractControl클래스는 FormControl, FormGroup, FormArray 클래스의 상위 클래스이기 때문에, AbstractControl을 인자로 받으면 폼 모델을 구성하는 모든 클래스에 대응할 수 있다. Angular 프레임워크는 required, minLength, maxLength, pattern과 같이 이미 정의되어 있는 유효성 검사기도 제공한다. 이 함수들은 @angular/forms모듈의 Validators 클래스에 정적 타입으로 정의되어 있으며, HTML5유효성 검사 표준을 따르고 있다. 유효성 검사기를 만들면 모델에서 이 함수를 사용하도록 지정해야 한다. 반응형 폼에서는 폼 모델 클래스의 생성자에 인자를 전달하는 방식으로 사용한다.
+ ex) import {FormControl, Validators } from '@angular/forms';
+     let usernameControl = new FormControl('', [Validators.required, Validators.minLength(5)]); ===> 첫번쨰 인자는 초기값이고 ,두 번째 인자가 유효성 검사기다. 유효성 검사기는 배열말고 단일로 사용도 가능 
+ - 그리고 폼 컨트롤의 값이 입력되었을 때 유효성 검사를 통과했는지 확인하려면 폼 컨트롤의 valid 프로퍼티가 어떤 값을 갖고 있는지 확인하면 된다.
+ ex) let isValid : boolean = usernameControl.valid ==> 값이 입력되고 유효성 검사를 통과하면 폼 컨트롤의 vaild 프로퍼티가 true를 반환한다.
+ - 실패할 경우 
+ ex) let errors : {[key : string] : any} = usernameControl.errors;
+ ### 에러 객체
+ - 유효성 검사기에 반환하는 에러는 JavaScript 객체이며, 유효성 검사기와 같은 이름의 프로퍼티에 해당 검사에 대한 정보를 표현하는데, 이 정보는 단일 값이 될 수 있고, 추가 정보를 가진 객체일 수도 있다. 표준 유효성 검사기인 Validators.minLength()를 예로 들면, 에러가 발생했을 때 참조할 수 있는 에러 객체는 다음과 같은 형식이다.
+  ex) {
+    minLength : {
+      requiredLength : 7,
+      actualLength : 5
+    }
+  }
+  에러 객체의 최상위 계층에는 유효성 검사기의 이름인 minLength가 프로퍼티 이름으로 객체가 만들어진다. 그리고 이 객체 안에는 requiredLength와 actualLength 정보를 담는다. 하지만 모든 유효성 검사기가 에러 정보를 자세히 제공하는 것은 아니다. 에러 객체의 최상위 계층에서 단순하게 에러가 발생했다고만 알리는 경우가 있는데, 이 경우 프로퍼티 값은 true로 고정된다. 표준 유효성 검사기 중에 Validators.required() 함수가 이런 방식으로 동작하며, 이 검사기의 에러 객체는 다음과 같다.
+  {
+    required : true
+  }
+  ### 커스텀 유효성 검사기
+  - 표준 유효성 검사기는 문자열이나 숫가 같은 기본 자료형을 검사할 때 간단하게 사용할 수 있다. 그리고 조 더 복잡한 데이터 형식을 검사하거나 특정 로직을 테스트해야 한다면 커스텀 유효성 검사기를 만들어서 사용할 수 있는데, Angular에서 유효성 검사기는 단순하게 함수이기 때문에 아주 쉽게 만들 수 있다. 유효성 검사기에서 FormControl, FormGroup, FormArray 와 같은 폼 컨트롤을 인자로 받고, 위에서 설명한 에러 객체의 형식을 검사 결과로 반환하면 된다.
+  ex) 주민번호(SSN)를 검사하는 유효성 검사기
+  function ssnValidator(control : FormControl) : {[key : string] : any}{
+    const value : string = control.value || ''; 
+    const value = value.match(/^\d{9}$/);       
+    return valid ? null : {ssn : true};         
+  }
+
+  let ssnControl = new FormControl('', ssnValidator);
+
+  ### 그룹 유효성 검사기(p375)
+  - 필드를 하나씩 검사하지 않고 연관 필드로 묶어 한 번에 검사할 때는 FormGroup를 인자로 받는 유효성 검사기를 만들면 된다. 그 예로 비빌번호 필드와 비빌번호 확인 필드의 값이 같은지 확인하는 유효성 검사기를 만들 수 있다.
+  ex) 
+  function equalValidator({value} : FormGroup) : {[key : string] : any}{
+    const [first, ...rest] = Object.keys(value || {});              ==> 폼 데이터의 모든 프로퍼티를 개별 변수로 할당한다.
+    const [valid ] = rest.every(v => value[v] === value[first]);    ==> 프로퍼티를 순회하며 값이 같은지 검사한다.
+    return void ? null : {equal : true};                            ==> 유효성 검사에 성공하면 null을 반환하고, 실패하면 에러 객체를 반환한다.
+  }
+
+  
 
  
 ## 서비스
