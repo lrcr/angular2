@@ -6,15 +6,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./output-component.component.css']
 })
 export class OutputChildComponent implements OnInit {
-	public pages = [1,2,3];
+  @Output()
+  pageChanged: EventEmitter<number> = new EventEmitter();
+  public pages = [1, 2, 3];
   constructor() { }
 
   ngOnInit() {
   }
-  clickPage(page: number){
-  	this.pageChanged.emit(page);
+
+  clickPage(page: number) {
+    this.pageChanged.emit(page);
   }
 
-  @Output()
-  pageChanged : EventEmitter<number> = new EventEmitter();
 }
